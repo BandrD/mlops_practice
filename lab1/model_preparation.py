@@ -9,7 +9,7 @@ train_data = pd.read_csv('train/temperature_train.csv')
 X_train = train_data[['Temperature']]
 
 # Целевая переменая
-y_train = train_data['Temperature']  # Замените 'Target' на имя вашей целевой переменной
+y_train = train_data['Temperature'] 
 
 # Создание и обучение модели
 model = LinearRegression()
