@@ -1,20 +1,21 @@
 import pandas as pd
 import pickle
 
-test_data = pd.read_csv('test/temperature_test.csv')
-
-# Выделение признака
-X_test = test_data[['Temperature']]
+# Загрузка тестовых данных
+test_data = pd.read_csv("test/build_price_test.csv")
 
 # Загрузка обученной модели
 with open('model.pkl', 'rb') as f:
     model = pickle.load(f)
 
-# Выполнение предсказаний на тестовых данных
+# Предсказание на тестовых данных
+X_test = test_data.drop(columns=['price_doc'])
+y_test = test_data['price_doc']
 y_pred = model.predict(X_test)
 
-print("Результаты предсказаний на тестовых данных:")
-print(y_pred)
+# Оценка качества модели (например, средняя абсолютная ошибка)
+mae = abs(y_pred - y_test).mean()
+print("Mean Absolute Error:", mae)
 
 
 print("Модель успешно протестирована на тестовых данных.")
