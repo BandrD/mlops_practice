@@ -1,2 +1,6 @@
-import requests
-import io
+requests
+io
+scikit-learn
+requests
+pandas
+numpy
