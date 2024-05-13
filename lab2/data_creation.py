@@ -5,7 +5,7 @@ import requests
 import io
 
 # Загрузка данных
-url = 'https://raw.github.com/BandrD/mlops_practice/raw/main/lab1/train/temperature_train.csv'
+url = 'https://raw.github.com/BandrD/mlops_practice/raw/main/lab1/train/build_price.csv'
 response = requests.get(url)
     
 if response.status_code == 200:
