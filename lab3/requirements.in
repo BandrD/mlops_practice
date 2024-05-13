@@ -1,0 +1,6 @@
+transformers
+accelerate
+safetensors
+streamlit
+pytest
+requests
