@@ -1,20 +1,17 @@
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
-import pickle
 
-# Загрузика данных из файла
-train_data = pd.read_csv('train/temperature_train.csv')
+# Загрузка обучающих данных
+train_data = pd.read_csv("train/build_price_train.csv")
 
-# Выделение признака
-X_train = train_data[['Temperature']]
+# Выделение признаков и целевой переменной
 
-# Создание и обучение StandardScaler на обучающих данных
-scaler = StandardScaler().fit(X_train)
+X_train = train_data.drop(columns=['price_doc'])
+y_train = train_data['price_doc']
 
-# Преобразуйте обучающих данных
-X_train_scaled = scaler.transform(X_train)
+# Применение предобработки данных
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
 
-with open('scaler.scl', 'wb') as f:
-    pickle.dump(scaler, f)
-
-print("Данные успешно предобработаны и scaler сохранен.")
+# Сохранение предобработанных данных
+pd.DataFrame(X_train_scaled, columns=X_train.columns).to_csv('train/build_price_train_preprocessed.csv', index=False)
