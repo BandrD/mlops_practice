@@ -1,20 +1,16 @@
 import pandas as pd
-from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
 import pickle
 
-# Загрузка обучающих данных
-train_data = pd.read_csv('train/temperature_train.csv')
+# Загрузка предобработанных данных
+X_train_scaled = pd.read_csv("train/build_price_train_preprocessed.csv")
+y_train = pd.read_csv("train/build_price_train.csv")['price_doc']
 
-# Выделение признака
-X_train = train_data[['Temperature']]
+# Обучение модели
+model = RandomForestRegressor()
+model.fit(X_train_scaled, y_train)
 
-# Целевая переменая
-y_train = train_data['Temperature'] 
-
-# Создание и обучение модели
-model = LinearRegression()
-model.fit(X_train, y_train)
-
+# Сохранение обученной модели
 with open('model.pkl', 'wb') as f:
     pickle.dump(model, f)
 
