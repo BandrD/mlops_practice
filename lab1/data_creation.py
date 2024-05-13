@@ -1,28 +1,20 @@
-import numpy as np
 import pandas as pd
+from sklearn.model_selection import train_test_split
 import os
 
-# Создаем временной ряд с шумом
-np.random.seed(42)
-days = pd.date_range(start='2024-01-01', end='2024-12-31', freq='D')
-temperature = np.sin(np.arange(len(days)) / 30) * 10 + np.random.normal(0, 2, len(days))
+# Загрузка данных (можно заменить на выкачивание из интернета)
+data = pd.read_csv("build_price.csv")
 
-# Создаем DataFrame с данными
-df = pd.DataFrame({'Date': days, 'Temperature': temperature})
+# Создание папок "train" и "test", если они не существуют
+os.makedirs('train', exist_ok=True)
+os.makedirs('test', exist_ok=True)
 
-# Разделяем данные на train и test
-train_size = int(0.8 * len(df))
-train_data = df.iloc[:train_size]
-test_data = df.iloc[train_size:]
+# Разделение данных на обучающий и тестовый наборы
+train_data, test_data = train_test_split(data, test_size=0.2, random_state=42)
 
-# Создаем папки для сохранения данных
-if not os.path.exists('train'):
-    os.makedirs('train')
-if not os.path.exists('test'):
-    os.makedirs('test')
+# Сохранение обучающего и тестового наборов данных
+train_data.to_csv('train/build_price_train.csv', index=False)
+test_data.to_csv('test/build_price_test.csv', index=False)
 
-# Сохраняем данные в CSV-файлах
-train_data.to_csv('train/temperature_train.csv', index=False)
-test_data.to_csv('test/temperature_test.csv', index=False)
 
 print("Данные успешно созданы и сохранены в папках 'train' и 'test'.")
